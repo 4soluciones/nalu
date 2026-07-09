@@ -75,7 +75,10 @@ def _get_user_assignment(user):
     us = UserSubsidiary.objects.filter(user=user, subsidiary=subsidiary).first()
     if not us:
         us = UserSubsidiary.objects.filter(user=user).select_related('subsidiary').first()
-    if us:
+
+    if user.is_staff:
+        rol = 'A'
+    elif us:
         rol = us.rol
         if not subsidiary:
             subsidiary = us.subsidiary
@@ -189,11 +192,14 @@ class UserListView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        users = User.objects.prefetch_related(
+        users = User.objects.filter(
+            is_superuser=False,
+        ).prefetch_related(
             'usersubsidiary_set__subsidiary', 'worker_set__employee', 'companyuser__company_rotation'
         ).order_by('-date_joined')
         ctx['users'] = users
         ctx['users_active_count'] = sum(1 for u in users if u.is_active)
+        ctx['users_staff_count'] = sum(1 for u in users if u.is_staff)
         return ctx
 
 

@@ -7,53 +7,79 @@
     <title>NALU — Iniciar sesión</title>
     <link href="{% static 'vendor/font-awesome-5/all.css' %}" rel="stylesheet">
     <link href="{% static 'css/nalu.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="{% static 'assets/nalu_logo.png' %}">
 </head>
-<body class="nalu-body">
+<body class="nalu-body nalu-login-body">
     <div class="nalu-login-page">
-        <div class="nalu-login-brand d-none d-md-flex">
-            <div class="brand-icon"><i class="fas fa-truck-moving"></i></div>
-            <img src="{% static 'assets/nalu_logo.png' %}" alt="NALU" class="logo-img" style="max-width:200px; filter: brightness(0) invert(1);">
-            <h1>Transporte de Carga</h1>
-            <p>Sistema integral para gestión de encomiendas, mudanzas, delivery y carga. Control total de sus operaciones logísticas.</p>
-        </div>
-
-        <div class="nalu-login-panel">
-            <img src="{% static 'assets/nalu_logo.png' %}" alt="NALU" class="logo-img d-md-none mx-auto d-block">
-            <h2>Bienvenido</h2>
-            <p class="subtitle">Ingrese sus credenciales para acceder al sistema</p>
-
-            <form action="" method="post">
-                {% csrf_token %}
-
-                {% if form.errors %}
-                    <div class="nalu-alert">
-                        {% for error in form.non_field_errors %}
-                            {{ error }}
-                        {% endfor %}
-                        {% if not form.non_field_errors %}
-                            Usuario o contraseña incorrectos.
-                        {% endif %}
-                    </div>
-                {% endif %}
-
-                <div class="nalu-input-group">
-                    <label for="username">Usuario</label>
-                    {{ form.username }}
+        <aside class="nalu-login-brand" aria-hidden="false">
+            <div class="nalu-login-brand-inner">
+                <div class="nalu-login-brand-logo-wrap">
+                    <img src="{% static 'assets/nalu_logo.png' %}" alt="NALU" class="nalu-login-brand-logo">
                 </div>
-                <div class="nalu-input-group">
-                    <label for="password">Contraseña</label>
-                    {{ form.password }}
-                </div>
-
-                <button class="nalu-btn-primary" type="submit">
-                    <i class="fas fa-sign-in-alt mr-2"></i> Ingresar
-                </button>
-            </form>
-
-            <div class="nalu-login-footer">
-                <p class="mt-2" style="opacity:0.6;">Desarrollado por <a href="http://4soluciones.net/">4soluciones S.A.C.</a></p>
+                <p class="nalu-login-brand-eyebrow">Plataforma logística</p>
+                <h1>Transporte y distribución con control total</h1>
+                <p class="nalu-login-brand-lead">
+                    Gestione encomiendas, mudanzas, delivery y carga desde un solo sistema operativo.
+                </p>
+                <ul class="nalu-login-features">
+                    <li><i class="fas fa-box"></i> Emisión de servicios y comprobantes</li>
+                    <li><i class="fas fa-route"></i> Programación de rutas y flota</li>
+                    <li><i class="fas fa-chart-line"></i> Reportes y seguimiento en tiempo real</li>
+                </ul>
             </div>
-        </div>
+        </aside>
+
+        <main class="nalu-login-main">
+            <div class="nalu-login-panel">
+                <div class="nalu-login-panel-head">
+                    <img src="{% static 'assets/nalu_logo.png' %}" alt="NALU" class="nalu-login-panel-logo d-lg-none">
+                    <h2>Iniciar sesión</h2>
+                    <p class="nalu-login-subtitle">Ingrese sus credenciales para acceder al sistema</p>
+                </div>
+
+                <form class="nalu-login-form" action="" method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                    <div class="nalu-login-alert" role="alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div>
+                            {% for error in form.non_field_errors %}
+                                <span>{{ error }}</span>
+                            {% empty %}
+                                <span>Usuario o contraseña incorrectos.</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="nalu-login-field">
+                        <label for="username">Usuario</label>
+                        <div class="nalu-login-input-wrap">
+                            <i class="fas fa-user nalu-login-input-icon" aria-hidden="true"></i>
+                            {{ form.username }}
+                        </div>
+                    </div>
+
+                    <div class="nalu-login-field">
+                        <label for="password">Contraseña</label>
+                        <div class="nalu-login-input-wrap">
+                            <i class="fas fa-lock nalu-login-input-icon" aria-hidden="true"></i>
+                            {{ form.password }}
+                        </div>
+                    </div>
+
+                    <button class="nalu-login-submit" type="submit">
+                        <span>Ingresar al sistema</span>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                </form>
+
+                <footer class="nalu-login-footer">
+                    <p>Desarrollado por <a href="http://4soluciones.net/" target="_blank" rel="noopener">4soluciones S.A.C.</a></p>
+                </footer>
+            </div>
+        </main>
     </div>
 </body>
 </html>

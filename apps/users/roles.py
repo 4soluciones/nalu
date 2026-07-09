@@ -15,7 +15,8 @@ def get_user_role(user):
     """Devuelve el rol efectivo del usuario (A=Administrador, O=Operador)."""
     if not user.is_authenticated:
         return None
-    if user.is_superuser:
+
+    if user.is_staff:
         return ROLE_ADMIN
 
     roles = list(UserSubsidiary.objects.filter(user=user).values_list('rol', flat=True))
@@ -26,8 +27,6 @@ def get_user_role(user):
         if role == 'E':
             return ROLE_OPERATOR
         return role
-    if user.is_staff:
-        return ROLE_ADMIN
     return ROLE_OPERATOR
 
 

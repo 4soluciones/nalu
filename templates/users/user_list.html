@@ -22,6 +22,10 @@
             <span class="nalu-users-stat-value">{{ users_active_count }}</span>
             <span class="nalu-users-stat-label">Activos</span>
         </div>
+        <div class="nalu-users-stat">
+            <span class="nalu-users-stat-value">{{ users_staff_count }}</span>
+            <span class="nalu-users-stat-label">Administradores</span>
+        </div>
     </div>
 
     <div class="nalu-form-section">
@@ -63,13 +67,11 @@
                             {% else %}—{% endif %}
                         </td>
                         <td>
-                            {% with us=u.usersubsidiary_set.first %}
-                                {% if us and us.rol == 'A' %}
-                                    <span class="nalu-badge nalu-badge-primary">Administrador</span>
-                                {% elif us %}
-                                    <span class="nalu-badge nalu-badge-muted">Operador</span>
-                                {% else %}—{% endif %}
-                            {% endwith %}
+                            {% if u.is_staff %}
+                                <span class="nalu-badge nalu-badge-primary">Administrador</span>
+                            {% else %}
+                                <span class="nalu-badge nalu-badge-muted">Operador</span>
+                            {% endif %}
                         </td>
                         <td>
                             {% if u.is_active %}
