@@ -1,0 +1,162 @@
+<div class="nalu-guide-service nalu-guide-service-c">
+    <div class="nalu-guide-e-top nalu-guide-e-top--balanced">
+        <div class="nalu-guide-card nalu-guide-e-doc">
+            <div class="nalu-guide-card-head"><i class="fas fa-building"></i><span>Cliente</span></div>
+            <div class="nalu-guide-s-route-fields">
+                <div class="nalu-form-group nalu-form-group-required">
+                    <label for="c_client_ruc">RUC</label>
+                    <div class="nalu-input-group nalu-doc-search-group" id="c_ruc_doc_group">
+                        <div class="nalu-doc-search-field">
+                            <input type="text" id="c_client_ruc" class="nalu-form-control" maxlength="11" placeholder="11 dígitos">
+                        </div>
+                        <button type="button" class="nalu-btn nalu-btn-outline nalu-btn-sm nalu-doc-search-btn" id="c_btn_search_ruc" title="Buscar RUC">
+                            <i class="fas fa-search nalu-doc-search-btn-icon"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="nalu-form-group nalu-form-group-required nalu-guide-s-field-full">
+                    <label for="c_client_name">Razón social</label>
+                    <div class="nalu-e-input-wrap">
+                        <i class="fas fa-briefcase nalu-e-input-icon"></i>
+                        <input type="text" id="c_client_name" class="nalu-form-control nalu-e-input-pad text-uppercase">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nalu-guide-card nalu-guide-e-route">
+            <div class="nalu-guide-card-head"><i class="fas fa-exchange-alt"></i><span>Origen y destino</span></div>
+            <div class="nalu-guide-s-route-panels">
+                <section class="nalu-guide-s-route-panel nalu-guide-s-route-panel-origin">
+                    <h6 class="nalu-guide-s-route-panel-title"><i class="fas fa-arrow-circle-up"></i> Origen</h6>
+                    <div class="nalu-guide-s-route-fields">
+                        <div class="nalu-form-group nalu-form-group-required nalu-guide-s-field-full">
+                            <label for="c_origin_address">Dirección</label>
+                            <input type="text" id="c_origin_address" class="nalu-form-control text-uppercase">
+                        </div>
+                        <div class="nalu-form-group">
+                            <label for="c_origin_contact">Contacto</label>
+                            <input type="text" id="c_origin_contact" class="nalu-form-control text-uppercase">
+                        </div>
+                        <div class="nalu-form-group">
+                            <label for="c_origin_phone">Teléfono</label>
+                            <input type="text" id="c_origin_phone" class="nalu-form-control" maxlength="9">
+                        </div>
+                    </div>
+                </section>
+                <section class="nalu-guide-s-route-panel nalu-guide-s-route-panel-dest">
+                    <h6 class="nalu-guide-s-route-panel-title"><i class="fas fa-arrow-circle-down"></i> Destino</h6>
+                    <div class="nalu-guide-s-route-fields">
+                        <div class="nalu-form-group nalu-form-group-required nalu-guide-s-field-full">
+                            <label for="c_dest_address">Dirección</label>
+                            <input type="text" id="c_dest_address" class="nalu-form-control text-uppercase">
+                        </div>
+                        <div class="nalu-form-group">
+                            <label for="c_dest_contact">Contacto</label>
+                            <input type="text" id="c_dest_contact" class="nalu-form-control text-uppercase">
+                        </div>
+                        <div class="nalu-form-group">
+                            <label for="c_dest_phone">Teléfono</label>
+                            <input type="text" id="c_dest_phone" class="nalu-form-control" maxlength="9">
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div class="nalu-guide-card nalu-guide-card-full nalu-guide-e-detail">
+        <div class="nalu-guide-card-head">
+            <span><i class="fas fa-truck-loading"></i> Mercancía</span>
+            <span class="nalu-guide-e-detail-count" id="c_detail_count">0 ítems</span>
+        </div>
+
+        <div class="nalu-guide-e-detail-compose nalu-guide-e-detail-compose--cargo">
+            <div class="nalu-form-group nalu-guide-e-detail-qty">
+                <label for="c_cargo_qty">Cant.</label>
+                <input type="number" id="c_cargo_qty" class="nalu-form-control text-center" min="1" value="1">
+            </div>
+            <div class="nalu-form-group nalu-guide-e-detail-desc">
+                <label for="c_cargo_type">Tipo de carga</label>
+                <div class="nalu-e-input-wrap">
+                    <i class="fas fa-pallet nalu-e-input-icon"></i>
+                    <input type="text" id="c_cargo_type" class="nalu-form-control nalu-e-input-pad text-uppercase" placeholder="Ej. PALLETS, SACOS, MAQUINARIA">
+                </div>
+            </div>
+            <div class="nalu-form-group nalu-guide-e-detail-price">
+                <label for="c_cargo_price">Precio (S/)</label>
+                <div class="nalu-e-input-wrap">
+                    <span class="nalu-e-input-prefix">S/</span>
+                    <input type="number" id="c_cargo_price" class="nalu-form-control nalu-e-input-prefix-pad" min="0" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+            <div class="nalu-form-group nalu-guide-e-detail-add">
+                <label>&nbsp;</label>
+                <button type="button" class="nalu-btn nalu-btn-success" id="c_add_cargo">
+                    <i class="fas fa-plus"></i> Agregar
+                </button>
+            </div>
+        </div>
+
+        <div class="nalu-guide-e-detail-body">
+            <div class="nalu-guide-e-detail-list-head nalu-guide-e-detail-list-head--cargo">
+                <span>Cant.</span>
+                <span>Tipo</span>
+                <span class="text-right">Precio</span>
+                <span></span>
+            </div>
+            <div class="nalu-guide-e-detail-list" id="c_cargo_body"></div>
+            <div class="nalu-guide-e-detail-empty" id="c_cargo_empty">
+                <i class="fas fa-truck-loading"></i>
+                <p>Agregue la mercancía a transportar</p>
+            </div>
+        </div>
+
+        <div class="nalu-guide-e-detail-summary">
+            <div class="nalu-guide-e-summary-item">
+                <span>Subtotal mercancía</span>
+                <strong>S/ <span class="c-cargo-total">0.00</span></strong>
+            </div>
+            <div class="nalu-guide-e-summary-item nalu-guide-e-summary-total">
+                <span>Tarifa total</span>
+                <strong>S/ <span id="c_fare_display">0.00</span></strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nalu-guide-card nalu-guide-e-doc">
+        <div class="nalu-guide-card-head"><i class="fas fa-credit-card"></i><span>Pago</span></div>
+        <div class="nalu-guide-e-doc-fields">
+            <div class="nalu-form-group nalu-form-group-required">
+                <label for="c_fare_amount">Tarifa total (S/)</label>
+                <div class="nalu-e-input-wrap">
+                    <span class="nalu-e-input-prefix">S/</span>
+                    <input type="number" id="c_fare_amount" class="nalu-form-control nalu-e-input-prefix-pad" min="0.01" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+            <div class="nalu-form-group">
+                <label for="c_payment_method">Método de pago</label>
+                <select id="c_payment_method" class="nalu-form-control">
+                    <option value="E">Efectivo</option>
+                    <option value="T">Tarjeta</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="nalu-guide-e-footer nalu-guide-service-footer">
+        <div class="nalu-guide-e-footer-left nalu-guide-service-footer-left">
+            <button type="button" class="nalu-btn nalu-btn-outline nalu-guide-e-btn-clear" id="c_btn_clear">
+                <i class="fas fa-eraser"></i> Limpiar
+            </button>
+            <button type="button" class="nalu-btn nalu-btn-outline nalu-guide-e-btn-cancel nalu-guide-btn-cancel">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+        </div>
+        <div class="nalu-guide-e-footer-right nalu-guide-service-footer-right">
+            <button type="submit" class="nalu-btn nalu-btn-primary nalu-guide-e-btn-save" id="c_btn_save_carga">
+                <i class="fas fa-save"></i> Guardar carga
+            </button>
+        </div>
+    </div>
+</div>

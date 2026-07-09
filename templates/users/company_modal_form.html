@@ -1,0 +1,47 @@
+<div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content nalu-modal">
+        <div class="modal-header">
+            <div>
+                <h5 class="modal-title"><i class="fas fa-industry"></i> Nueva empresa</h5>
+                <p class="nalu-modal-subtitle mb-0">Registre una empresa de transporte</p>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form id="company-modal-form">
+            {% csrf_token %}
+            <div class="modal-body">
+                <h6 class="nalu-section-label">Datos de la empresa</h6>
+                <div class="nalu-form-grid">
+                    <div class="nalu-form-group nalu-form-group-full">
+                        <label>{{ form.business_name.label }}</label>
+                        {{ form.business_name }}
+                    </div>
+                    <div class="nalu-form-group">
+                        <label>{{ form.short_name.label }}</label>
+                        {{ form.short_name }}
+                    </div>
+                    <div class="nalu-form-group">
+                        <label>{{ form.ruc.label }}</label>
+                        {{ form.ruc }}
+                    </div>
+                    <div class="nalu-form-group">
+                        <label>{{ form.phone.label }}</label>
+                        {{ form.phone }}
+                    </div>
+                    <div class="nalu-form-group nalu-form-group-full">
+                        <label>{{ form.address.label }}</label>
+                        {{ form.address }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="nalu-btn nalu-btn-outline" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="nalu-btn nalu-btn-success">
+                    <i class="fas fa-save"></i> Guardar empresa
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

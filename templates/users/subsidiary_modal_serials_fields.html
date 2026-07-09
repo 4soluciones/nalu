@@ -1,0 +1,102 @@
+<div class="nalu-subsidiary-serial-form-grid">
+    <section class="nalu-subsidiary-serial-form-card nalu-subsidiary-serial-form-card-e">
+        <header class="nalu-subsidiary-serial-form-card-head">
+            <span class="nalu-subsidiary-serial-form-icon"><i class="fas fa-box"></i></span>
+            <div>
+                <h6>Encomienda</h6>
+                <p>Series por tipo de comprobante</p>
+            </div>
+        </header>
+        <div class="nalu-subsidiary-serial-form-fields nalu-subsidiary-serial-form-fields-3">
+            <div class="nalu-form-group">
+                <label for="{% if series_form %}id_serial_ticket{% else %}serial_ticket{% endif %}">
+                    <span class="nalu-doc-pill nalu-doc-pill-t">T</span> Ticket
+                </label>
+                {% if series_form %}
+                    {{ series_form.serial_ticket }}
+                {% else %}
+                    <input class="nalu-form-control" id="serial_ticket" name="serial_ticket" maxlength="10"
+                           value="{{ serial_ticket }}" placeholder="Ej: T001" autocomplete="off">
+                {% endif %}
+            </div>
+            <div class="nalu-form-group">
+                <label for="{% if series_form %}id_serial_boleta{% else %}serial_boleta{% endif %}">
+                    <span class="nalu-doc-pill nalu-doc-pill-b">B</span> Boleta
+                </label>
+                {% if series_form %}
+                    {{ series_form.serial_boleta }}
+                {% else %}
+                    <input class="nalu-form-control" id="serial_boleta" name="serial_boleta" maxlength="10"
+                           value="{{ serial_boleta }}" placeholder="Ej: B001" autocomplete="off">
+                {% endif %}
+            </div>
+            <div class="nalu-form-group">
+                <label for="{% if series_form %}id_serial_factura{% else %}serial_factura{% endif %}">
+                    <span class="nalu-doc-pill nalu-doc-pill-f">F</span> Factura
+                </label>
+                {% if series_form %}
+                    {{ series_form.serial_factura }}
+                {% else %}
+                    <input class="nalu-form-control" id="serial_factura" name="serial_factura" maxlength="10"
+                           value="{{ serial_factura }}" placeholder="Ej: F001" autocomplete="off">
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="nalu-subsidiary-serial-form-card nalu-subsidiary-serial-form-card-services">
+        <header class="nalu-subsidiary-serial-form-card-head">
+            <span class="nalu-subsidiary-serial-form-icon"><i class="fas fa-shipping-fast"></i></span>
+            <div>
+                <h6>Otros servicios</h6>
+                <p>Mudanza, delivery, carga y programación</p>
+            </div>
+        </header>
+        <div class="nalu-subsidiary-serial-form-fields nalu-subsidiary-serial-form-fields-2">
+            <div class="nalu-form-group">
+                <label for="{% if series_form %}id_serial_mudanza{% else %}serial_mudanza{% endif %}">
+                    <span class="nalu-service-pill nalu-service-pill-m">M</span> Mudanzas
+                </label>
+                {% if series_form %}
+                    {{ series_form.serial_mudanza }}
+                {% else %}
+                    <input class="nalu-form-control" id="serial_mudanza" name="serial_mudanza" maxlength="10"
+                           value="{{ serial_mudanza }}" placeholder="Ej: MM01" autocomplete="off">
+                {% endif %}
+            </div>
+            <div class="nalu-form-group">
+                <label for="{% if series_form %}id_serial_delivery{% else %}serial_delivery{% endif %}">
+                    <span class="nalu-service-pill nalu-service-pill-d">D</span> Delivery
+                </label>
+                {% if series_form %}
+                    {{ series_form.serial_delivery }}
+                {% else %}
+                    <input class="nalu-form-control" id="serial_delivery" name="serial_delivery" maxlength="10"
+                           value="{{ serial_delivery }}" placeholder="Ej: MD01" autocomplete="off">
+                {% endif %}
+            </div>
+            <div class="nalu-form-group">
+                <label for="{% if series_form %}id_serial_carga{% else %}serial_carga{% endif %}">
+                    <span class="nalu-service-pill nalu-service-pill-c">C</span> Carga
+                </label>
+                {% if series_form %}
+                    {{ series_form.serial_carga }}
+                {% else %}
+                    <input class="nalu-form-control" id="serial_carga" name="serial_carga" maxlength="10"
+                           value="{{ serial_carga }}" placeholder="Ej: MC01" autocomplete="off">
+                {% endif %}
+            </div>
+            <div class="nalu-form-group">
+                <label for="{% if series_form %}id_serial_manifiesto{% else %}serial_manifiesto{% endif %}">
+                    <span class="nalu-service-pill nalu-service-pill-p">P</span> Manifiesto
+                </label>
+                {% if series_form %}
+                    {{ series_form.serial_manifiesto }}
+                {% else %}
+                    <input class="nalu-form-control" id="serial_manifiesto" name="serial_manifiesto" maxlength="10"
+                           value="{{ serial_manifiesto }}" placeholder="Ej: MF01" autocomplete="off">
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</div>

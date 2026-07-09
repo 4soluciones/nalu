@@ -1,0 +1,64 @@
+<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content nalu-modal nalu-subsidiary-modal">
+        <div class="modal-header">
+            <div class="nalu-subsidiary-modal-header">
+                <span class="nalu-subsidiary-modal-icon" aria-hidden="true"><i class="fas fa-pen"></i></span>
+                <div>
+                    <h5 class="modal-title">Editar sede</h5>
+                    <p class="nalu-modal-subtitle mb-0">
+                        {{ subsidiary.name }}
+                        <span class="nalu-subsidiary-modal-company-badge">{{ company.short_name }}</span>
+                    </p>
+                </div>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <form id="subsidiary-edit-modal-form"
+              data-action="{% url 'users:save_subsidiary_edit' subsidiary.id company.id %}">
+            {% csrf_token %}
+            <div class="modal-body">
+                <div class="nalu-modal-hint">
+                    <i class="fas fa-info-circle"></i>
+                    Actualice los datos de la sede y las series. Los correlativos actuales no se modifican desde aquí.
+                </div>
+
+                <div class="nalu-subsidiary-modal-sections">
+                    <section class="nalu-subsidiary-modal-block">
+                        <h6 class="nalu-subsidiary-modal-block-title">
+                            <i class="fas fa-map-marker-alt"></i> Datos de la sede
+                        </h6>
+                        <div class="nalu-form-grid nalu-subsidiary-data-grid">
+                            {% for field in form %}
+                            <div class="nalu-form-group {% if field.name == 'address' %}nalu-form-group-full{% endif %}">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+
+                    <section class="nalu-subsidiary-modal-block">
+                        <h6 class="nalu-subsidiary-modal-block-title">
+                            <i class="fas fa-hashtag"></i> Series por servicio
+                        </h6>
+                        <div class="nalu-subsidiary-edit-company">
+                            <span class="nalu-subsidiary-edit-company-label">Empresa</span>
+                            <span class="nalu-badge nalu-badge-service">{{ company.business_name|default:company.short_name }}</span>
+                        </div>
+                        {% include "users/subsidiary_modal_serials_fields.html" %}
+                    </section>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="nalu-btn nalu-btn-outline" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="nalu-btn nalu-btn-success">
+                    <i class="fas fa-save"></i> Guardar cambios
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

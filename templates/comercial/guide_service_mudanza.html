@@ -1,0 +1,155 @@
+<div class="nalu-guide-service nalu-guide-service-m">
+    <div class="nalu-guide-e-top">
+        <div class="nalu-guide-card nalu-guide-e-doc">
+            <div class="nalu-guide-card-head"><i class="fas fa-calendar-alt"></i><span>Programación y pago</span></div>
+            <div class="nalu-guide-e-doc-fields">
+                <div class="nalu-form-group nalu-form-group-required">
+                    <label for="m_service_date">Fecha del servicio</label>
+                    <div class="nalu-e-input-wrap">
+                        <i class="fas fa-calendar-alt nalu-e-input-icon"></i>
+                        <input type="date" id="m_service_date" class="nalu-form-control nalu-e-input-pad" value="{{ date }}">
+                    </div>
+                </div>
+                <div class="nalu-form-group nalu-form-group-required">
+                    <label for="m_service_time">Hora</label>
+                    <div class="nalu-e-input-wrap">
+                        <i class="fas fa-clock nalu-e-input-icon"></i>
+                        <input type="time" id="m_service_time" class="nalu-form-control nalu-e-input-pad" value="{{ time }}">
+                    </div>
+                </div>
+                <div class="nalu-form-group">
+                    <label for="m_helpers_count">Ayudantes</label>
+                    <div class="nalu-e-input-wrap">
+                        <i class="fas fa-users nalu-e-input-icon"></i>
+                        <input type="number" id="m_helpers_count" class="nalu-form-control nalu-e-input-pad" min="0" max="20" value="0">
+                    </div>
+                </div>
+                <div class="nalu-form-group nalu-form-group-required">
+                    <label for="m_fare_amount">Tarifa (S/)</label>
+                    <div class="nalu-e-input-wrap">
+                        <span class="nalu-e-input-prefix">S/</span>
+                        <input type="number" id="m_fare_amount" class="nalu-form-control nalu-e-input-prefix-pad" min="0.01" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="nalu-form-group">
+                    <label for="m_payment_method">Método de pago</label>
+                    <select id="m_payment_method" class="nalu-form-control">
+                        <option value="E">Efectivo</option>
+                        <option value="T">Tarjeta</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="nalu-guide-card nalu-guide-e-route">
+            <div class="nalu-guide-card-head"><i class="fas fa-route"></i><span>Ruta de mudanza</span></div>
+            <div class="nalu-guide-s-route-panels">
+                <section class="nalu-guide-s-route-panel nalu-guide-s-route-panel-origin">
+                    <h6 class="nalu-guide-s-route-panel-title"><i class="fas fa-map-marker-alt"></i> Origen</h6>
+                    <div class="nalu-guide-s-route-fields">
+                        <div class="nalu-form-group nalu-form-group-required nalu-guide-s-field-full">
+                            <label for="m_origin_address">Dirección</label>
+                            <input type="text" id="m_origin_address" class="nalu-form-control text-uppercase" placeholder="Calle, número, urbanización...">
+                        </div>
+                        <div class="nalu-form-group nalu-form-group-required">
+                            <label for="m_origin_property_type">Tipo inmueble</label>
+                            <select id="m_origin_property_type" class="nalu-form-control">
+                                <option value="C">Casa</option>
+                                <option value="D">Departamento</option>
+                                <option value="O">Oficina</option>
+                            </select>
+                        </div>
+                        <div class="nalu-form-group">
+                            <label for="m_origin_floors">Pisos / nivel</label>
+                            <input type="number" id="m_origin_floors" class="nalu-form-control" min="0" max="99" value="1">
+                        </div>
+                    </div>
+                </section>
+                <section class="nalu-guide-s-route-panel nalu-guide-s-route-panel-dest">
+                    <h6 class="nalu-guide-s-route-panel-title"><i class="fas fa-map-pin"></i> Destino</h6>
+                    <div class="nalu-guide-s-route-fields">
+                        <div class="nalu-form-group nalu-form-group-required nalu-guide-s-field-full">
+                            <label for="m_dest_address">Dirección</label>
+                            <input type="text" id="m_dest_address" class="nalu-form-control text-uppercase" placeholder="Calle, número, urbanización...">
+                        </div>
+                        <div class="nalu-form-group nalu-form-group-required">
+                            <label for="m_dest_property_type">Tipo inmueble</label>
+                            <select id="m_dest_property_type" class="nalu-form-control">
+                                <option value="C">Casa</option>
+                                <option value="D">Departamento</option>
+                                <option value="O">Oficina</option>
+                            </select>
+                        </div>
+                        <div class="nalu-form-group">
+                            <label for="m_dest_floors">Pisos / nivel</label>
+                            <input type="number" id="m_dest_floors" class="nalu-form-control" min="0" max="99" value="1">
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div class="nalu-guide-card nalu-guide-card-full nalu-guide-e-detail">
+        <div class="nalu-guide-card-head">
+            <span><i class="fas fa-clipboard-list"></i> Inventario estimado</span>
+            <span class="nalu-guide-e-detail-count" id="m_detail_count">0 ítems</span>
+        </div>
+
+        <div class="nalu-guide-e-detail-compose nalu-guide-e-detail-compose--2">
+            <div class="nalu-form-group nalu-guide-e-detail-qty">
+                <label for="m_item_qty">Cant.</label>
+                <input type="number" id="m_item_qty" class="nalu-form-control text-center" min="1" value="1">
+            </div>
+            <div class="nalu-form-group nalu-guide-e-detail-desc">
+                <label for="m_item_desc">Artículo / mueble</label>
+                <div class="nalu-e-input-wrap">
+                    <i class="fas fa-couch nalu-e-input-icon"></i>
+                    <input type="text" id="m_item_desc" class="nalu-form-control nalu-e-input-pad text-uppercase" placeholder="Ej. SOFÁ, REFRIGERADORA, CAJA">
+                </div>
+            </div>
+            <div class="nalu-form-group nalu-guide-e-detail-add">
+                <label>&nbsp;</label>
+                <button type="button" class="nalu-btn nalu-btn-success" id="m_add_item">
+                    <i class="fas fa-plus"></i> Agregar
+                </button>
+            </div>
+        </div>
+
+        <div class="nalu-guide-e-detail-body">
+            <div class="nalu-guide-e-detail-list-head nalu-guide-e-detail-list-head--2">
+                <span>Cant.</span>
+                <span>Descripción</span>
+                <span></span>
+            </div>
+            <div class="nalu-guide-e-detail-list" id="m_inventory_body"></div>
+            <div class="nalu-guide-e-detail-empty" id="m_inventory_empty">
+                <i class="fas fa-box-open"></i>
+                <p>Agregue los artículos del inventario</p>
+            </div>
+        </div>
+
+        <div class="nalu-guide-e-detail-summary">
+            <div class="nalu-guide-e-summary-item nalu-guide-e-summary-total">
+                <span>Tarifa del servicio</span>
+                <strong>S/ <span id="m_fare_display">0.00</span></strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nalu-guide-e-footer nalu-guide-service-footer">
+        <div class="nalu-guide-e-footer-left nalu-guide-service-footer-left">
+            <button type="button" class="nalu-btn nalu-btn-outline nalu-guide-e-btn-clear" id="m_btn_clear">
+                <i class="fas fa-eraser"></i> Limpiar
+            </button>
+            <button type="button" class="nalu-btn nalu-btn-outline nalu-guide-e-btn-cancel nalu-guide-btn-cancel">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+        </div>
+        <div class="nalu-guide-e-footer-right nalu-guide-service-footer-right">
+            <button type="submit" class="nalu-btn nalu-btn-primary nalu-guide-e-btn-save" id="m_btn_save_mudanza">
+                <i class="fas fa-save"></i> Guardar mudanza
+            </button>
+        </div>
+    </div>
+</div>

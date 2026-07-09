@@ -1,0 +1,97 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}NALU — Panel de control{% endblock %}
+
+{% block body %}
+<div class="nalu-dashboard">
+    <header class="nalu-dashboard-hero">
+        <div class="nalu-dashboard-hero-logo-wrap">
+            <img
+                src="{% static 'assets/nalu_logo.png' %}"
+                alt="{% if company_rotation %}{{ company_rotation.business_name }}{% else %}NALU{% endif %}"
+                class="nalu-dashboard-hero-logo"
+            >
+        </div>
+        <div class="nalu-dashboard-hero-text">
+            <p class="nalu-dashboard-hero-greeting">Hola,</p>
+            <h1 class="nalu-dashboard-hero-name">{{ user_display_name }}</h1>
+            <p class="nalu-dashboard-hero-meta">
+                {% if subsidiary %}{{ subsidiary.name }}{% elif user_subsidiary_name %}{{ user_subsidiary_name }}{% endif %}
+                {% if company_rotation %}
+                    <span class="nalu-dashboard-hero-company">{{ company_rotation.business_name }}</span>
+                {% endif %}
+            </p>
+            <p class="nalu-dashboard-hero-tagline">Plataforma integral de gestión de transporte y logística</p>
+        </div>
+    </header>
+
+    <section class="nalu-dashboard-panel">
+        <div class="nalu-dashboard-panel-head">
+            <div>
+                <h2>Operaciones del día</h2>
+                <p>Acceda rápidamente a emisión de servicios y control operativo</p>
+            </div>
+        </div>
+
+        <div class="nalu-dashboard-actions">
+            <a href="{% url 'comercial:new_guide' %}?service_type=E" class="nalu-dashboard-action nalu-dashboard-action-e">
+                <span class="nalu-dashboard-action-icon"><i class="fas fa-box"></i></span>
+                <span class="nalu-dashboard-action-title">Encomiendas</span>
+                <span class="nalu-dashboard-action-desc">Registrar envíos y guías</span>
+            </a>
+            <a href="{% url 'comercial:new_guide' %}?service_type=M" class="nalu-dashboard-action nalu-dashboard-action-m">
+                <span class="nalu-dashboard-action-icon"><i class="fas fa-people-carry"></i></span>
+                <span class="nalu-dashboard-action-title">Mudanzas</span>
+                <span class="nalu-dashboard-action-desc">Servicios de traslado</span>
+            </a>
+            <a href="{% url 'comercial:new_guide' %}?service_type=D" class="nalu-dashboard-action nalu-dashboard-action-d">
+                <span class="nalu-dashboard-action-icon"><i class="fas fa-shipping-fast"></i></span>
+                <span class="nalu-dashboard-action-title">Delivery</span>
+                <span class="nalu-dashboard-action-desc">Entregas punto a punto</span>
+            </a>
+            <a href="{% url 'comercial:new_guide' %}?service_type=C" class="nalu-dashboard-action nalu-dashboard-action-c">
+                <span class="nalu-dashboard-action-icon"><i class="fas fa-truck-loading"></i></span>
+                <span class="nalu-dashboard-action-title">Carga</span>
+                <span class="nalu-dashboard-action-desc">Transporte de mercancía</span>
+            </a>
+            <a href="{% url 'comercial:programming_list' %}" class="nalu-dashboard-action nalu-dashboard-action-p">
+                <span class="nalu-dashboard-action-icon"><i class="fas fa-route"></i></span>
+                <span class="nalu-dashboard-action-title">Programación</span>
+                <span class="nalu-dashboard-action-desc">Rutas y salidas de unidades</span>
+            </a>
+            {% if can_see_reports %}
+            <a href="{% url 'comercial:report_comodity_grid' %}" class="nalu-dashboard-action nalu-dashboard-action-r">
+                <span class="nalu-dashboard-action-icon"><i class="fas fa-chart-bar"></i></span>
+                <span class="nalu-dashboard-action-title">Reporte de servicios</span>
+                <span class="nalu-dashboard-action-desc">Consultar operaciones</span>
+            </a>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="nalu-dashboard-info">
+        <div class="nalu-dashboard-info-card">
+            <i class="fas fa-map-marked-alt"></i>
+            <div>
+                <h3>Cobertura nacional</h3>
+                <p>Gestione encomiendas, mudanzas, delivery y carga desde una sola plataforma.</p>
+            </div>
+        </div>
+        <div class="nalu-dashboard-info-card">
+            <i class="fas fa-shield-alt"></i>
+            <div>
+                <h3>Control operativo</h3>
+                <p>Seguimiento de servicios, comprobantes y programación de flota en tiempo real.</p>
+            </div>
+        </div>
+        <div class="nalu-dashboard-info-card">
+            <i class="fas fa-headset"></i>
+            <div>
+                <h3>Atención eficiente</h3>
+                <p>Emisión ágil de guías y tickets para una operación confiable y ordenada.</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,192 @@
+{% load static %}
+
+<header class="nalu-header d-none d-lg-block">
+
+    <div class="nalu-header-inner">
+
+        <a href="{% url 'dashboard' %}" class="logo-link">
+
+            <img src="{% static 'assets/nalu_logo.png' %}" alt="NALU"/>
+
+        </a>
+
+
+
+        <ul class="nalu-nav">
+
+            <li>
+
+                <a href="#"><i class="fas fa-shipping-fast"></i> Servicios</a>
+
+                <ul class="submenu">
+
+                    <li><a href="{% url 'comercial:new_guide' %}?service_type=E"><i class="fas fa-box"></i> Encomiendas</a></li>
+
+                    <li><a href="{% url 'comercial:new_guide' %}?service_type=M"><i class="fas fa-people-carry"></i> Mudanzas</a></li>
+
+                    <li><a href="{% url 'comercial:new_guide' %}?service_type=D"><i class="fas fa-motorcycle"></i> Delivery</a></li>
+
+                    <li><a href="{% url 'comercial:new_guide' %}?service_type=C"><i class="fas fa-truck-loading"></i> Carga</a></li>
+
+                </ul>
+
+            </li>
+
+            <li>
+
+                <a href="#"><i class="fas fa-route"></i> Operaciones</a>
+
+                <ul class="submenu">
+
+                    <li><a href="{% url 'comercial:programming_list' %}"><i class="fas fa-calendar-alt"></i> Programación de viajes</a></li>
+
+                    <li><a href="{% url 'comercial:truck_list' %}"><i class="fas fa-truck"></i> Unidades</a></li>
+
+                </ul>
+
+            </li>
+
+            <li>
+
+                <a href="#"><i class="fas fa-wallet"></i> Finanzas</a>
+
+                <ul class="submenu">
+
+                    <li><a href="{% url 'accounting:get_cash_control_list' %}"><i class="fas fa-cash-register"></i> Caja y gastos</a></li>
+
+                </ul>
+
+            </li>
+
+            {% if can_see_reports %}
+
+            <li>
+
+                <a href="#"><i class="fas fa-chart-bar"></i> Reportes</a>
+
+                <ul class="submenu">
+
+                    <li><a href="{% url 'comercial:report_comodity_grid' %}"><i class="fas fa-file-alt"></i> Reporte de servicios</a></li>
+
+                </ul>
+
+            </li>
+
+            {% endif %}
+
+            {% if can_see_admin %}
+
+            <li>
+
+                <a href="#"><i class="fas fa-cog"></i> Gestión</a>
+
+                <ul class="submenu">
+
+                    <li><a href="{% url 'users:user_list' %}"><i class="fas fa-users"></i> Usuarios</a></li>
+
+                    <li><a href="{% url 'users:company_list' %}"><i class="fas fa-industry"></i> Empresas</a></li>
+
+                    <li><a href="{% url 'users:subsidiary_list' %}"><i class="fas fa-building"></i> Sedes y series</a></li>
+
+                </ul>
+
+            </li>
+
+            {% endif %}
+
+        </ul>
+
+
+
+        <div class="nalu-header-actions">
+
+            <div class="nalu-header-context">
+
+                <span class="nalu-header-company-name" id="nalu-header-company">
+
+                    {% if company_rotation %}{{ company_rotation.business_name }}{% else %}NALU Transporte{% endif %}
+
+                </span>
+
+                <span class="nalu-header-subsidiary-name" id="nalu-header-subsidiary">
+
+                    <i class="fas fa-map-marker-alt"></i>
+
+                    {% if current_subsidiary %}{{ current_subsidiary.name }}{% else %}Sin sede asignada{% endif %}
+
+                </span>
+
+            </div>
+
+
+
+            <div class="nalu-user-menu dropdown">
+
+                <a href="#" class="dropdown-toggle nalu-user-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    <span class="nalu-user-avatar-sm">{{ user_display_name|slice:":1"|upper }}</span>
+
+                    <span class="nalu-user-name">{{ user_display_name|truncatechars:24 }}</span>
+
+                    <i class="fas fa-chevron-down nalu-user-chevron"></i>
+
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right nalu-user-dropdown">
+
+                    <div class="nalu-user-dropdown-head">
+
+                        <strong>{{ user_display_name }}</strong>
+
+                        {% if user_role_display %}<span>{{ user_role_display }}</span>{% endif %}
+
+                    </div>
+
+
+
+                    {% if can_see_admin %}
+
+                    {% if all_subsidiaries %}
+
+                    <h6 class="dropdown-header">Cambiar sede</h6>
+
+                    {% for s in all_subsidiaries %}
+
+                    <a class="dropdown-item switch-subsidiary-item{% if current_subsidiary and current_subsidiary.id == s.id %} active{% endif %}"
+
+                       href="#"
+
+                       data-subsidiary-id="{{ s.id }}">
+
+                        <span><i class="fas fa-building"></i> {{ s.name }}</span>
+
+                        {% if current_subsidiary and current_subsidiary.id == s.id %}
+
+                            <i class="fas fa-check text-success"></i>
+
+                        {% endif %}
+
+                    </a>
+
+                    {% endfor %}
+
+                    {% endif %}
+
+                    <div class="dropdown-divider"></div>
+
+                    {% endif %}
+
+
+
+                    <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+

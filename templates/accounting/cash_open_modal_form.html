@@ -1,0 +1,49 @@
+<div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content nalu-modal nalu-finance-modal">
+        <div class="modal-header">
+            <div class="nalu-prog-modal-header-content">
+                <div class="nalu-prog-modal-icon" aria-hidden="true">
+                    <i class="fas fa-door-open"></i>
+                </div>
+                <div>
+                    <h5 class="modal-title">Aperturar caja</h5>
+                    <p class="nalu-modal-subtitle mb-0">Inicie el día operativo de la caja seleccionada</p>
+                </div>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <form id="cash-form" method="POST">
+            {% csrf_token %}
+            <div class="modal-body">
+                <div class="nalu-form-grid">
+                    <div class="nalu-form-group nalu-form-group-required">
+                        <label for="id-select-cash">Caja</label>
+                        <select class="nalu-form-control" id="id-select-cash" name="select-cash" required>
+                            <option value="" disabled selected>Seleccione caja</option>
+                            {% for c in only_cash_set %}
+                                <option value="{{ c.pk }}">{{ c.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="nalu-form-group">
+                        <label for="cash-date">Fecha de apertura</label>
+                        <input type="date" class="nalu-form-control" id="cash-date" name="cash-date" value="{{ formatdate }}" required>
+                    </div>
+                    <div class="nalu-form-group nalu-form-group-full">
+                        <label for="cash-amount">Saldo inicial / día anterior</label>
+                        <input type="text" class="nalu-form-control nalu-amount-display" id="cash-amount" name="cash-amount" readonly placeholder="Seleccione una caja">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="nalu-btn nalu-btn-outline" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="nalu-btn nalu-btn-success" id="btn-save">
+                    <i class="fas fa-door-open"></i> Aperturar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

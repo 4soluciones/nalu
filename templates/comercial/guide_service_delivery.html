@@ -1,0 +1,134 @@
+<div class="nalu-guide-service nalu-guide-service-d">
+    <div class="nalu-guide-e-top nalu-guide-e-top--balanced">
+        <div class="nalu-guide-card nalu-guide-e-route">
+            <div class="nalu-guide-card-head"><i class="fas fa-map-marker-alt"></i><span>Punto origen A</span></div>
+            <div class="nalu-guide-s-route-fields">
+                <div class="nalu-form-group nalu-form-group-required nalu-guide-s-field-full">
+                    <label for="d_origin_address">Dirección de recojo</label>
+                    <div class="nalu-e-input-wrap">
+                        <i class="fas fa-location-arrow nalu-e-input-icon"></i>
+                        <input type="text" id="d_origin_address" class="nalu-form-control nalu-e-input-pad text-uppercase" placeholder="Dirección completa del punto A">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nalu-guide-card nalu-guide-e-route">
+            <div class="nalu-guide-card-head"><i class="fas fa-map-pin"></i><span>Punto destino B</span></div>
+            <div class="nalu-guide-s-route-fields">
+                <div class="nalu-form-group nalu-form-group-required">
+                    <label for="d_dest_client">Cliente</label>
+                    <div class="nalu-e-input-wrap">
+                        <i class="fas fa-user nalu-e-input-icon"></i>
+                        <input type="text" id="d_dest_client" class="nalu-form-control nalu-e-input-pad text-uppercase">
+                    </div>
+                </div>
+                <div class="nalu-form-group nalu-form-group-required">
+                    <label for="d_dest_phone">Teléfono</label>
+                    <div class="nalu-e-input-wrap">
+                        <i class="fas fa-phone nalu-e-input-icon"></i>
+                        <input type="text" id="d_dest_phone" class="nalu-form-control nalu-e-input-pad" maxlength="9">
+                    </div>
+                </div>
+                <div class="nalu-form-group nalu-form-group-required nalu-guide-s-field-full">
+                    <label for="d_dest_address">Dirección de entrega</label>
+                    <input type="text" id="d_dest_address" class="nalu-form-control text-uppercase">
+                </div>
+                <div class="nalu-form-group nalu-guide-s-field-full">
+                    <label for="d_dest_reference">Referencia</label>
+                    <input type="text" id="d_dest_reference" class="nalu-form-control text-uppercase" placeholder="Edificio, piso, timbre...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nalu-guide-card nalu-guide-card-full nalu-guide-e-detail">
+        <div class="nalu-guide-card-head">
+            <span><i class="fas fa-box"></i> Detalle del envío</span>
+            <span class="nalu-guide-e-detail-count" id="d_detail_count">0 ítems</span>
+        </div>
+
+        <div class="nalu-guide-e-detail-compose nalu-guide-e-detail-compose--3">
+            <div class="nalu-form-group nalu-guide-e-detail-desc">
+                <label for="d_item_desc">Descripción</label>
+                <div class="nalu-e-input-wrap">
+                    <i class="fas fa-tag nalu-e-input-icon"></i>
+                    <input type="text" id="d_item_desc" class="nalu-form-control nalu-e-input-pad text-uppercase" placeholder="Ej. PAQUETE, DOCUMENTOS">
+                </div>
+            </div>
+            <div class="nalu-form-group nalu-guide-e-detail-price">
+                <label for="d_item_price">Precio (S/)</label>
+                <div class="nalu-e-input-wrap">
+                    <span class="nalu-e-input-prefix">S/</span>
+                    <input type="number" id="d_item_price" class="nalu-form-control nalu-e-input-prefix-pad" min="0" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+            <div class="nalu-form-group nalu-guide-e-detail-add">
+                <label>&nbsp;</label>
+                <button type="button" class="nalu-btn nalu-btn-success" id="d_add_item">
+                    <i class="fas fa-plus"></i> Agregar
+                </button>
+            </div>
+        </div>
+
+        <div class="nalu-guide-e-detail-body">
+            <div class="nalu-guide-e-detail-list-head nalu-guide-e-detail-list-head--3">
+                <span>Descripción</span>
+                <span class="text-right">Precio</span>
+                <span></span>
+            </div>
+            <div class="nalu-guide-e-detail-list" id="d_shipment_body"></div>
+            <div class="nalu-guide-e-detail-empty" id="d_shipment_empty">
+                <i class="fas fa-shipping-fast"></i>
+                <p>Agregue los ítems del envío</p>
+            </div>
+        </div>
+
+        <div class="nalu-guide-e-detail-summary">
+            <div class="nalu-guide-e-summary-item">
+                <span>Subtotal envío</span>
+                <strong>S/ <span class="d-shipment-total">0.00</span></strong>
+            </div>
+            <div class="nalu-guide-e-summary-item nalu-guide-e-summary-total">
+                <span>Tarifa total</span>
+                <strong>S/ <span id="d_fare_display">0.00</span></strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nalu-guide-card nalu-guide-e-doc">
+        <div class="nalu-guide-card-head"><i class="fas fa-credit-card"></i><span>Pago</span></div>
+        <div class="nalu-guide-e-doc-fields">
+            <div class="nalu-form-group nalu-form-group-required">
+                <label for="d_fare_amount">Tarifa (S/)</label>
+                <div class="nalu-e-input-wrap">
+                    <span class="nalu-e-input-prefix">S/</span>
+                    <input type="number" id="d_fare_amount" class="nalu-form-control nalu-e-input-prefix-pad" min="0.01" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+            <div class="nalu-form-group nalu-form-group-required">
+                <label for="d_payment_method">Método de pago</label>
+                <select id="d_payment_method" class="nalu-form-control">
+                    <option value="E">Efectivo</option>
+                    <option value="T">Tarjeta</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="nalu-guide-e-footer nalu-guide-service-footer">
+        <div class="nalu-guide-e-footer-left nalu-guide-service-footer-left">
+            <button type="button" class="nalu-btn nalu-btn-outline nalu-guide-e-btn-clear" id="d_btn_clear">
+                <i class="fas fa-eraser"></i> Limpiar
+            </button>
+            <button type="button" class="nalu-btn nalu-btn-outline nalu-guide-e-btn-cancel nalu-guide-btn-cancel">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+        </div>
+        <div class="nalu-guide-e-footer-right nalu-guide-service-footer-right">
+            <button type="submit" class="nalu-btn nalu-btn-primary nalu-guide-e-btn-save" id="d_btn_save_delivery">
+                <i class="fas fa-save"></i> Guardar delivery
+            </button>
+        </div>
+    </div>
+</div>

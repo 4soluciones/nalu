@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>NALU — Iniciar sesión</title>
+    <link href="{% static 'vendor/font-awesome-5/all.css' %}" rel="stylesheet">
+    <link href="{% static 'css/nalu.css' %}" rel="stylesheet">
+</head>
+<body class="nalu-body">
+    <div class="nalu-login-page">
+        <div class="nalu-login-brand d-none d-md-flex">
+            <div class="brand-icon"><i class="fas fa-truck-moving"></i></div>
+            <img src="{% static 'assets/nalu_logo.png' %}" alt="NALU" class="logo-img" style="max-width:200px; filter: brightness(0) invert(1);">
+            <h1>Transporte de Carga</h1>
+            <p>Sistema integral para gestión de encomiendas, mudanzas, delivery y carga. Control total de sus operaciones logísticas.</p>
+        </div>
+
+        <div class="nalu-login-panel">
+            <img src="{% static 'assets/nalu_logo.png' %}" alt="NALU" class="logo-img d-md-none mx-auto d-block">
+            <h2>Bienvenido</h2>
+            <p class="subtitle">Ingrese sus credenciales para acceder al sistema</p>
+
+            <form action="" method="post">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    <div class="nalu-alert">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                        {% if not form.non_field_errors %}
+                            Usuario o contraseña incorrectos.
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <div class="nalu-input-group">
+                    <label for="username">Usuario</label>
+                    {{ form.username }}
+                </div>
+                <div class="nalu-input-group">
+                    <label for="password">Contraseña</label>
+                    {{ form.password }}
+                </div>
+
+                <button class="nalu-btn-primary" type="submit">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Ingresar
+                </button>
+            </form>
+
+            <div class="nalu-login-footer">
+                <p class="mt-2" style="opacity:0.6;">Desarrollado por <a href="http://4soluciones.net/">4soluciones S.A.C.</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
