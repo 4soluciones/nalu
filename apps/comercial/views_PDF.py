@@ -1035,14 +1035,10 @@ def print_bill_order_commodity(request, pk=None):  # Boleta / Factura Encomienda
 
     name_enterprise = 'NALU'
 
-    subsidiary_aqp = Subsidiary.objects.filter(name='SEDE AREQUIPA').first()
-    phone_aqp = subsidiary_aqp.phone
-
-    subsidiary_pedregal = Subsidiary.objects.filter(name='SEDE PEDREGAL AV AREQUIPA').first()
-    phone_pedregal = subsidiary_pedregal.phone
-
-    subsidiary_camana = Subsidiary.objects.filter(name='SEDE CAMANA').first()
-    phone_camana = subsidiary_camana.phone
+    subsidiary_phones = [
+        (sub.name, sub.phone)
+        for sub in Subsidiary.objects.exclude(phone__isnull=True).exclude(phone='').order_by('name')
+    ]
 
     if order_bill_obj.type == '1':
         tbn_document = 'FACTURA ELECTRÓNICA'
@@ -1082,7 +1078,7 @@ def print_bill_order_commodity(request, pk=None):  # Boleta / Factura Encomienda
 
     rows = []
 
-    if encomienda and encomienda.code_track and order_obj.check_trade() == False:
+    if encomienda and encomienda.code_track:
         td_code_track = (
             Paragraph('<b>NRO. ORDEN:</b> ' + str(order_obj.id), style_custom_left),
             Paragraph('<b>CÓDIGO:</b> ' + str(encomienda.code_track), style_custom_right)

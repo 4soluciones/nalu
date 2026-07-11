@@ -4,8 +4,8 @@ from .format_to_dates import utc_to_local
 from .models import *
 from apps.users.user_helpers import get_subsidiary_by_user
 
-# GRAPHQL_URL = "https://ng.tuf4ctur4.net.pe/graphql"
-GRAPHQL_URL = "http://192.168.1.80:9050/graphql"
+GRAPHQL_URL = "https://ng.tuf4ctur4.net.pe/graphql"
+# GRAPHQL_URL = "http://192.168.1.80:9050/graphql"
 
 tokens = {
     "20616147375": "gAAAAABqT_l8q0dToIn7AlWTMnlBn6mQlCTss1Bn_GoN1wMTUdCR-Ql-RzMcKY1Yrbacuf2nWlvTBLMDYVfSrdwzQy2Xq-cYjw==",
