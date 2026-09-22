@@ -125,7 +125,15 @@
     $(document).off('click.reportCancel').on('click.reportCancel', '.btn-cancel-service', function () {
         var orderId = $(this).data('id');
         var reason = prompt('Motivo de anulación:');
-        if (!reason) return;
+        if (reason === null) {
+            toastr.warning('Debe ingresar un motivo de anulación.');
+            return;
+        }
+        reason = $.trim(reason);
+        if (!reason) {
+            toastr.warning('Debe ingresar un motivo de anulación.');
+            return;
+        }
         var $form = $('#report-search-form');
         $.get('{% url "comercial:cancel_commodity" %}', {
             pk: orderId,
@@ -136,6 +144,10 @@
             way_to_pay: $form.find('[name=way_to_pay]').val(),
             destiny: $form.find('[name=destiny]').val()
         }).done(function (r) {
+            if (!r.cancelled) {
+                toastr.error(r.error || r.message || 'No se pudo anular el servicio.');
+                return;
+            }
             toastr.success(r.message || 'Servicio anulado correctamente.');
             $('#report-results').html(r.grid);
         }).fail(function (xhr) {

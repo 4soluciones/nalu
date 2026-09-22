@@ -1440,8 +1440,22 @@ def get_truck(request):
     return JsonResponse({'error': True, 'message': 'Error de peticion.'})
 
 
+def _mark_order_cancelled(order_obj, motive):
+    order_obj.status = 'A'
+    order_obj.cancel_motive = (motive or '').strip()
+    order_obj.save()
+    CashFlow.objects.filter(order=order_obj).delete()
+    OrderBill.objects.filter(order=order_obj).update(status='A')
+    OrderCommodity.objects.filter(order=order_obj).update(type_commodity='A')
+
+
 def cancel_commodity(request):
     if request.method == 'GET':
+        if not request.user.is_authenticated:
+            return JsonResponse(
+                {'error': 'Debe iniciar sesión para anular una orden.'},
+                status=HTTPStatus.UNAUTHORIZED,
+            )
         start_date = str(request.GET.get('start-date'))
         end_date = str(request.GET.get('end-date'))
         order_id = int(request.GET.get('pk', ''))
@@ -1450,59 +1464,43 @@ def cancel_commodity(request):
         destiny = request.GET.get('destiny')
 
         order_obj = Order.objects.get(pk=order_id)
-
-        type_order = order_obj.type_order
         type_document = order_obj.type_document
-
-        user_id = request.user.id
-        user_obj = User.objects.get(id=user_id)
+        user_obj = request.user
         subsidiary_obj = get_subsidiary_by_user(user_obj)
 
         user_select_obj = None
-
+        cancelled = False
         message = ''
+        _motive = (request.GET.get('reason') or '').strip()
 
-        if type_order == 'E':
-            _motive = request.GET.get('reason')
-            if type_document == 'T':
-                order_obj.status = 'A'
-                order_obj.cancel_motive = _motive
-                order_obj.save()
-                cash_obj = CashFlow.objects.filter(order=order_obj)
-                cash_obj.delete()
-
-            elif type_document == 'F' or type_document == 'B':
-                order_bill_set = OrderBill.objects.filter(order=order_id)
-                if order_bill_set.exists():
-                    # r = send_cancel_bill_nubefact(order_id, _motive)
-                    # enlace = r.get('enlace')
-                    r = annul_invoice(order_id)
-                    enlace = r.get('success')
-                    if enlace:
-                        order_obj.status = 'A'
-                        order_obj.save()
-                        cash_obj = CashFlow.objects.filter(order=order_obj)
-                        cash_obj.delete()
-                    else:
-                        data = {'error': "Error de anulación en sunat, "
-                                         "Actualice o vuelva a intentarlo"}
-                        response = JsonResponse(data)
-                        response.status_code = HTTPStatus.INTERNAL_SERVER_ERROR
-                        return response
-
-            # elif type_document == 'B':
-            #     order_bill_set = OrderBill.objects.filter(order=order_id)
-            #     if order_bill_set.exists():
-            #         r = send_cancel_bill_nubefact(order_id, _motive)
-            #         enlace = r.get('enlace')
-            #         if enlace:
-            #             message = "Encomienda anulada correctamente en SUNAT"
-            #         else:
-            #             message = "Encomienda anulada Internamente, REVISAR ANULACION EN SUNAT"
-            #         order_obj.status = 'A'
-            #         order_obj.save()
-            #         cash_obj = CashFlow.objects.filter(order=order_obj)
-            #         cash_obj.delete()
+        if order_obj.status == 'A':
+            cancelled = True
+            message = 'El servicio ya está anulado.'
+        elif not _motive:
+            return JsonResponse(
+                {'error': 'Debe ingresar un motivo de anulación.', 'cancelled': False},
+                status=HTTPStatus.BAD_REQUEST,
+            )
+        elif type_document in ('F', 'B'):
+            order_bill = OrderBill.objects.filter(order=order_obj).first()
+            has_electronic_invoice = bool(
+                order_bill and (order_bill.invoice_id or order_bill.n_receipt)
+            )
+            if has_electronic_invoice:
+                r = annul_invoice(order_obj.id)
+                if not r.get('success'):
+                    return JsonResponse({
+                        'error': r.get('message') or (
+                            'Error de anulación en SUNAT. Actualice o vuelva a intentarlo.'
+                        ),
+                    }, status=HTTPStatus.INTERNAL_SERVER_ERROR)
+            _mark_order_cancelled(order_obj, _motive)
+            cancelled = True
+            message = 'Servicio anulado correctamente.'
+        else:
+            _mark_order_cancelled(order_obj, _motive)
+            cancelled = True
+            message = 'Servicio anulado correctamente.'
 
         order_set = Order.objects.filter(
             subsidiary=subsidiary_obj, type_order='E', traslate_date__range=[start_date, end_date])
@@ -1565,6 +1563,7 @@ def cancel_commodity(request):
             'user_log_perm': user_is_administrator(user_obj),
         }
         return JsonResponse({
+            'cancelled': cancelled,
             'message': message,
             'grid': tpl.render(context, request)
         }, status=HTTPStatus.OK)
