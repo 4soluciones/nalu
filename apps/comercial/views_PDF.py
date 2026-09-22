@@ -7,6 +7,7 @@ import reportlab
 # import tempfile
 # import win32api
 # import win32con
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import landscape, A5, portrait, A6, A4
 from reportlab.pdfbase import pdfmetrics
@@ -1019,7 +1020,11 @@ def print_bill_order_commodity(request, pk=None):  # Boleta / Factura Encomienda
 
     tbh_business_name_address = ''
 
-    order_bill_obj = order_obj.orderbill
+    try:
+        order_bill_obj = order_obj.orderbill
+    except ObjectDoesNotExist:
+        return print_ticket_order_commodity(request, pk)
+
     client_document = ""
     client_name = ""
     client_address = ""

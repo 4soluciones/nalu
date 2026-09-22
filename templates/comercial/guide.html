@@ -14,6 +14,18 @@
 
 {% block body %}
 
+{% if not user.is_authenticated %}
+<div class="nalu-page nalu-guide-page">
+    <div class="nalu-guide-hero">
+        <div class="nalu-guide-hero-text nalu-guide-hero-text--center">
+            <h1>Sesión requerida</h1>
+            <p>Debe iniciar sesión para emitir una orden.</p>
+            <a class="nalu-btn" href="{% url 'login' %}">Iniciar sesión</a>
+        </div>
+    </div>
+</div>
+{% else %}
+
 <div class="nalu-page nalu-guide-page">
 
     <form id="new-guide-form" class="nalu-guide-form" autocomplete="off"
@@ -144,12 +156,15 @@
 
 </div>
 
+{% endif %}
+
 {% endblock %}
 
 
 
 {% block extrajs %}
 
+{% if user.is_authenticated %}
 <script src="{% static 'js/guide_services.js' %}"></script>
 
 <script type="text/javascript">
@@ -163,6 +178,7 @@
     });
 
 </script>
+{% endif %}
 
 {% endblock %}
 

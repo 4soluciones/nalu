@@ -7,6 +7,7 @@ from http import HTTPStatus
 
 from django.contrib.auth.models import User
 from django.core import serializers
+from django.db import transaction
 from django.db.models import Prefetch
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -58,7 +59,7 @@ from apps.sales.views_SUNAT import (
     query_api_facturacioncloud,
     query_apis_net_dni_ruc,
 )
-from apps.users.models import DocumentType, Employee, Nationality, Subsidiary, UserSubsidiary
+from apps.users.models import DocumentType, Employee, Subsidiary, UserSubsidiary
 from apps.users.subsidiary_serial_helpers import get_serial
 from apps.users.roles import user_is_administrator
 from apps.users.views import CompanyUser, get_subsidiary_by_user
@@ -432,8 +433,9 @@ def get_programmings(need_rendering, subsidiary_obj=None, company_obj=None, show
 # ----------------------------------------Guide------------------------------------
 
 def new_guide(request):
-    user_id = request.user.id
-    user_obj = User.objects.get(id=user_id)
+    if not request.user.is_authenticated:
+        return redirect('login')
+    user_obj = request.user
     company_rotation_obj = user_obj.companyuser.company_rotation
     subsidiary_obj = get_subsidiary_by_user(user_obj)
     company_user_set = CompanyUser.objects.filter(user=user_obj)
@@ -497,13 +499,17 @@ def get_guide_document(request):
     return JsonResponse({'message': 'Error de peticion.'}, status=HTTPStatus.BAD_REQUEST)
 
 
+@transaction.atomic
 def create_order(request):
     if request.method == 'GET':
+        if not request.user.is_authenticated:
+            return JsonResponse(
+                {'error': 'Debe iniciar sesión para emitir una orden.'},
+                status=HTTPStatus.UNAUTHORIZED,
+            )
         orders_request = request.GET.get('orders', '')
         data_orders = json.loads(orders_request)
-        # print(data_orders)
-        user_id = request.user.id
-        user_obj = User.objects.get(pk=int(user_id))
+        user_obj = request.user
         subsidiary_obj = get_subsidiary_by_user(user_obj)
         company_obj = user_obj.companyuser.company_rotation
         _document_type = 'G'
@@ -532,11 +538,18 @@ def create_order(request):
         type_document = str(data_orders["Type"])
 
         arrival_time = str(data_orders["Arrival_Time"])
-        user = int(data_orders["User"])
         type_guide = str(data_orders["Type_Guide"])
         address_delivery = str(data_orders["Address_Delivery"])
+        traslate_date = str(data_orders["Date_traslate"])
 
-        user_selected_obj = User.objects.get(pk=int(user))
+        user_selected_obj = user_obj
+
+        open_cash = get_open_cash_for_subsidiary(subsidiary_obj, traslate_date)
+        if not open_cash:
+            data = {'error': "No existe una Apertura de Caja"}
+            response = JsonResponse(data)
+            response.status_code = HTTPStatus.INTERNAL_SERVER_ERROR
+            return response
 
         user_subsidiary_set = UserSubsidiary.objects.filter(user=user_selected_obj)
 
@@ -578,13 +591,8 @@ def create_order(request):
 
             else:
                 client_sender_type = str(data_orders["Client_Sender_type"])
-                nationality_obj = None
-                if client_sender_type == '01':
-                    nationality = '9589'
-                    nationality_obj = Nationality.objects.get(id=nationality)
                 client_obj_sender = Client(
                     names=client_sender_name.upper(),
-                    nationality=nationality_obj,
                     phone=client_sender_phone
                 )
                 client_obj_sender.save()
@@ -610,7 +618,6 @@ def create_order(request):
             client_sender_addressee_obj.save()
 
         _type = str(data_orders["Type"])
-        traslate_date = str(data_orders["Date_traslate"])
         way_to_pay = str(data_orders["Way_to_pay"])
         igv = str(data_orders["Igv"])
         sub_total = str(data_orders["Sub_total"])
@@ -670,13 +677,8 @@ def create_order(request):
                     client_obj_addressee_obj.phone = phone_addressee
                     client_obj_addressee_obj.save()
                 else:
-                    nationality_obj = None
-                    if document_type_addressee == '01':
-                        nationality = '9589'
-                        nationality_obj = Nationality.objects.get(id=nationality)
                     client_obj_addressee_obj = Client(
                         names=name_addressee.upper(),
-                        nationality=nationality_obj,
                         phone=phone_addressee
                     )
                     client_obj_addressee_obj.save()
@@ -842,13 +844,6 @@ def create_order(request):
                 return response
 
 
-        open_cash = get_open_cash_for_subsidiary(subsidiary_obj, traslate_date)
-        if not open_cash:
-            data = {'error': "No existe una Apertura de Caja"}
-            response = JsonResponse(data)
-            response.status_code = HTTPStatus.INTERNAL_SERVER_ERROR
-            return response
-
         cash_obj = open_cash
 
         serial_description_cash = 'PAGO DE LA ENCOMIENDA {}-{}'.format(order_obj.serial,
@@ -974,9 +969,10 @@ def get_name_business(request):
                 return JsonResponse({'result': names, 'address': address}, status=HTTPStatus.OK)
 
             elif type_document == '04' or type_document == '07':
-                names = client_obj_search.first().names
-                nationality = client_obj_search.first().nationality.id
-                phone = client_obj_search.first().phone
+                client_found = client_obj_search.first()
+                names = client_found.names
+                nationality = client_found.nationality_id
+                phone = client_found.phone
                 return JsonResponse({'result': names, 'nationality': nationality, 'phone': phone}, status=HTTPStatus.OK)
 
             else:

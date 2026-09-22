@@ -26,7 +26,7 @@ urlpatterns = [
     path('get_programming_form/', login_required(get_programming_form), name='get_programming_form'),
     path('update_programming/', update_programming, name='update_programming'),
     # guide / orders
-    path('new_guide/', new_guide, name='new_guide'),
+    path('new_guide/', login_required(new_guide), name='new_guide'),
     path('get_guide_document/', login_required(get_guide_document), name='get_guide_document'),
     path('create_order/', create_order, name='create_order'),
     path('get_address_subsidiary_by_id/', get_address_subsidiary_by_id, name='get_address_subsidiary_by_id'),

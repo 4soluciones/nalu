@@ -3,6 +3,7 @@ import decimal
 import io
 from datetime import datetime, timedelta
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from nalu import settings
 from reportlab.graphics.barcode import qr
@@ -1064,9 +1065,12 @@ def _bill_header(order_obj, doc_title):
     return elements
 
 
-def build_bill_encomienda(order_obj, pk):
+def build_bill_encomienda(order_obj, pk, request=None):
     s = _local_styles()
-    order_bill = order_obj.orderbill
+    try:
+        order_bill = order_obj.orderbill
+    except ObjectDoesNotExist:
+        return build_ticket_for_service(order_obj, pk, request)
     if order_bill.type == '1':
         doc_title = 'FACTURA ELECTRÓNICA'
     else:

@@ -578,6 +578,10 @@ var GuideServices = (function ($) {
     }
 
     function validate() {
+        if (!$('#id_user').val()) {
+            toastr.error('Debe iniciar sesión para emitir una orden.');
+            return false;
+        }
         var svc = activeService();
         var $btn = $(saveButtonSelector(svc));
         if ($btn.length && $btn.prop('disabled')) { toastr.warning(MSG_CASH_CLOSED); return false; }
@@ -784,7 +788,8 @@ var GuideServices = (function ($) {
                     handleSaveSuccess(response);
                 },
                 error: function (xhr) {
-                    toastr.error(xhr.responseJSON?.error || 'Error al guardar');
+                    var payload = xhr.responseJSON || {};
+                    toastr.error(payload.error || payload.message || 'Error al guardar');
                 },
                 complete: function () {
                     $('#guide-loading').hide();
