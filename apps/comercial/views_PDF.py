@@ -176,7 +176,7 @@ def print_ticket_order_commodity(request, pk=None):  # Ticket/Guia de encomienda
 
 
     if order_obj.company.id == 1:
-        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20455935173 '
+        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20616147375 '
     elif order_obj.company.id == 2:
         tbh_business_name_address = order_obj.company.business_name + '\n' + 'RUC: ' + order_obj.company.ruc
 
@@ -690,7 +690,7 @@ def print_ticket_order_passenger(request, pk=None):  # Boleto de viaje boleta / 
     client_address = ""
 
     if order_obj.company.id == 1:
-        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20455935173 '
+        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20616147375 '
     elif order_obj.company.id == 2:
         tbh_business_name_address = order_obj.company.business_name + '\n' + 'RUC: ' + order_obj.company.ruc
 
@@ -1034,7 +1034,7 @@ def print_bill_order_commodity(request, pk=None):  # Boleta / Factura Encomienda
     recipients = OrderAction.objects.filter(order=order_obj, type='D')
 
     if order_obj.company.id == 1:
-        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20455935173 '
+        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20616147375 '
     elif order_obj.company.id == 2:
         tbh_business_name_address = order_obj.company.business_name + '\n' + 'RUC: ' + order_obj.company.ruc
 
@@ -1426,7 +1426,7 @@ def print_bill_order_commodity(request, pk=None):  # Boleta / Factura Encomienda
     ana_c8.setStyle(TableStyle(my_style_table5))
 
     # datatable = order_bill_obj.code_qr
-    # datatable = 'https://4soluciones.pse.pe/20455935173'
+    # datatable = 'https://4soluciones.pse.pe/20616147375'
     date_now = datetime.now()
     _format_date_now = date_now.strftime("%d/%m/%Y %I:%M:%S %p")
     _create_date = order_obj.traslate_date.strftime("%d/%m/%Y") + ' ' + str(_formattime)
@@ -1931,11 +1931,11 @@ def print_manifest_comidity(request, pk=None):  # Manifiesto de Encomiendas
     tbh_business_name_address = ''
 
     if manifest_obj.company.id == 1:
-        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20455935173'
+        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20616147375'
     elif manifest_obj.company.id == 2:
-        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20455935173'
+        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20616147375'
     elif manifest_obj.company.id == 3:
-        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20455935173'
+        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20616147375'
 
     # tbh_business_name_address = 'TURISMO MENDIVIL S.R.L <br/> CALLE JAVIER P. DE CUELLAR B-3 INT 105 TERM. TERRESTRE S/N INT. E1-E / URB. ARTURO IBAÑEZ HUNTER AREQUIPA <br/> RUC: 20442736759'
     ph = Paragraph(tbh_business_name_address.replace("\n", "<br />"), styles["Justify-Dotcirful-table"])
@@ -2375,10 +2375,10 @@ def print_ticket_old(request, pk=None):  # TICKET PASSENGER OLD
         client_address = entity_set.first().client.clientaddress_set.first().address
 
     if order_obj.company.id == 1:
-        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20455935173'
+        tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20616147375'
     elif order_obj.company.id == 2:
         tbh_business_name_address = order_obj.company.business_name + '\n' + 'RUC: ' + order_obj.company.ruc
-        # tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20455935173'
+        # tbh_business_name_address = 'EMPRESA DE TRANSPORTES\n NALU S.R.L.\n RUC: 20616147375'
 
     date = order_obj.programming_seat.programming.departure_date
     _format_time = utc_to_local(order_obj.create_at).strftime("%H:%M %p")
